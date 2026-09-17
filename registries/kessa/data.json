@@ -1,0 +1,51 @@
+{
+  "_note": "Kessa's internal record format is deliberately structured differently from Meridia's (nested holder object, different date format, different status vocabulary) — proving the adapter pattern works even when countries don't share conventions.",
+  "diplomas": [
+    {
+      "recordRef": "KES-DIP-4001",
+      "holder": { "name": "Naledi Mokoena", "idNumber": "KES-ID-20981" },
+      "issuer": "Kessa National University",
+      "dateAwarded": "14/09/2020",
+      "state": "VALID"
+    },
+    {
+      "recordRef": "KES-DIP-4002",
+      "holder": { "name": "Tendai Chikwava", "idNumber": "KES-ID-55620" },
+      "issuer": "Kessa Polytechnic",
+      "dateAwarded": "02/07/2022",
+      "state": "VALID"
+    }
+  ],
+  "business_registrations": [
+    {
+      "recordRef": "KES-BIZ-5001",
+      "holder": { "name": "Baraka Logistics Ltd.", "idNumber": "KES-ID-77302" },
+      "issuer": "Kessa Business Registrar",
+      "dateAwarded": "11/01/2021",
+      "state": "VALID"
+    },
+    {
+      "recordRef": "KES-BIZ-5002",
+      "holder": { "name": "Delta Farm Exports", "idNumber": "KES-ID-30044" },
+      "issuer": "Kessa Business Registrar",
+      "dateAwarded": "23/11/2019",
+      "state": "REVOKED"
+    }
+  ],
+  "civil_status": [
+    {
+      "recordRef": "KES-CIV-6001",
+      "holder": { "name": "Grace Adeyemi", "idNumber": "KES-ID-88213" },
+      "issuer": "Kessa Civil Affairs Office",
+      "dateAwarded": "05/03/2022",
+      "state": "VALID"
+    },
+    {
+      "recordRef": "KES-CIV-6002",
+      "holder": { "name": "Ibrahim Yusuf", "idNumber": "KES-ID-19087" },
+      "issuer": "Kessa Civil Affairs Office",
+      "dateAwarded": "30/06/2017",
+      "state": "VALID"
+    }
+  ]
+}

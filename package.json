@@ -1,0 +1,10 @@
+{
+  "name": "a-road",
+  "version": "0.1.0",
+  "description": "Africa's continental trust layer for verifiable civic records — a proof of concept inspired by Estonia's X-Road.",
+  "main": "exchange/server.js",
+  "scripts": {
+    "start": "node exchange/server.js"
+  },
+  "license": "MIT"
+}

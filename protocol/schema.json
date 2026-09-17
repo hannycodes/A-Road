@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A-Road Verification Record",
+  "description": "The one shared record shape every country's adapter must translate its own data into. This is the entire interoperability contract — nothing else is shared between countries.",
+  "type": "object",
+  "required": [
+    "recordId",
+    "credentialType",
+    "holderName",
+    "holderIdentifier",
+    "issuingCountry",
+    "issuingInstitution",
+    "issueDate",
+    "status"
+  ],
+  "properties": {
+    "recordId": {
+      "type": "string",
+      "description": "Reference number a verifier queries by, e.g. MER-DIP-1001"
+    },
+    "credentialType": {
+      "type": "string",
+      "enum": ["diploma", "business_registration", "civil_status"],
+      "description": "One shared protocol, three record types — the point of the demo"
+    },
+    "holderName": { "type": "string" },
+    "holderIdentifier": {
+      "type": "string",
+      "description": "National ID, business ID, or civil registry number — meaning depends on credentialType"
+    },
+    "issuingCountry": { "type": "string", "description": "ISO-style country code, e.g. MER, KES" },
+    "issuingInstitution": { "type": "string" },
+    "issueDate": { "type": "string", "format": "date" },
+    "status": {
+      "type": "string",
+      "enum": ["valid", "revoked", "expired"]
+    },
+    "lastConfirmed": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Set by the exchange layer at query time, not stored by the registry"
+    },
+    "signature": {
+      "type": "string",
+      "description": "HMAC signature over the response, proving it came from the issuing country's adapter"
+    }
+  }
+}
