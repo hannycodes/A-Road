@@ -1,0 +1,57 @@
+{
+  "_disclaimer": "DEMO / MOCK NATIONAL REGISTRY. This is fictional sample data for a proof-of-concept demo — it is not connected to, and does not represent, any real Rwandan government system or database.",
+  "_note": "Rwanda's internal record format is deliberately structured differently from Kenya's (nested holder object, dd/mm/yyyy dates, upper-case status vocabulary) to prove the adapter pattern absorbs real-world inconsistency.",
+  "diplomas": [
+    {
+      "recordRef": "RWA-DIP-4001",
+      "holder": { "name": "Naledi Uwase", "idNumber": "RWA-ID-20981" },
+      "school": "University of Rwanda",
+      "credentialTitle": "Diploma in Nursing",
+      "dateAwarded": "14/09/2020",
+      "state": "VALID"
+    },
+    {
+      "recordRef": "RWA-DIP-4002",
+      "holder": { "name": "Tendai Mugisha", "idNumber": "RWA-ID-55620" },
+      "school": "Kigali Polytechnic",
+      "credentialTitle": "Diploma in Civil Engineering",
+      "dateAwarded": "02/07/2022",
+      "state": "VALID"
+    }
+  ],
+  "business_registrations": [
+    {
+      "recordRef": "RWA-BIZ-5001",
+      "holder": { "name": "Baraka Logistics Ltd.", "idNumber": "RWA-ID-77302" },
+      "issuer": "Rwanda Development Board",
+      "dateAwarded": "11/01/2021",
+      "state": "VALID"
+    },
+    {
+      "recordRef": "RWA-BIZ-5002",
+      "holder": { "name": "Delta Farm Exports", "idNumber": "RWA-ID-30044" },
+      "issuer": "Rwanda Development Board",
+      "dateAwarded": "23/11/2019",
+      "state": "REVOKED"
+    }
+  ],
+  "civil_status": [
+    {
+      "recordRef": "RWA-CIV-6001",
+      "holder": { "name": "Grace Uwimana", "idNumber": "RWA-ID-88213" },
+      "issuer": "Rwanda Civil Affairs Office",
+      "dateAwarded": "05/03/2022",
+      "state": "VALID"
+    }
+  ],
+  "health_records": [
+    {
+      "recordRef": "RWA-HLT-7001",
+      "holder": { "name": "Ibrahim Nshuti", "idNumber": "RWA-ID-19087" },
+      "issuer": "Rwanda Ministry of Health",
+      "dateAwarded": "30/06/2024",
+      "state": "VALID",
+      "recordKind": "Yellow Fever Vaccination Certificate"
+    }
+  ]
+}

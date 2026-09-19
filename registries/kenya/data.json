@@ -1,0 +1,63 @@
+{
+  "_disclaimer": "DEMO / MOCK NATIONAL REGISTRY. This is fictional sample data for a proof-of-concept demo — it is not connected to, and does not represent, any real Kenyan government system or database.",
+  "_note": "Kenya's OWN internal record format — deliberately different field names/shapes from Rwanda's, to prove the adapter pattern actually translates rather than assuming a shared format.",
+  "diplomas": [
+    {
+      "ref": "KEN-DIP-1001",
+      "student_full_name": "Amara Wanjiru",
+      "student_national_id": "KEN-ID-58213",
+      "school": "Kenya School of Nursing",
+      "credential_title": "Diploma in Nursing",
+      "awarded": "2021-06-14",
+      "current_status": "active"
+    },
+    {
+      "ref": "KEN-DIP-1002",
+      "student_full_name": "Kwame Otieno",
+      "student_national_id": "KEN-ID-77410",
+      "school": "Kenya Institute of Technology",
+      "credential_title": "Diploma in Electrical Engineering",
+      "awarded": "2019-11-02",
+      "current_status": "revoked"
+    }
+  ],
+  "business_registrations": [
+    {
+      "ref": "KEN-BIZ-2001",
+      "business_name": "Savanna Textiles Ltd.",
+      "owner_national_id": "KEN-ID-90312",
+      "registrar": "Kenya Business Registration Service",
+      "registered_on": "2022-03-01",
+      "current_status": "active"
+    },
+    {
+      "ref": "KEN-BIZ-2002",
+      "business_name": "Riverside Traders Co.",
+      "owner_national_id": "KEN-ID-44120",
+      "registrar": "Kenya Business Registration Service",
+      "registered_on": "2020-08-19",
+      "current_status": "expired"
+    }
+  ],
+  "civil_status": [
+    {
+      "ref": "KEN-CIV-3001",
+      "person_full_name": "Fatima Njeri",
+      "person_national_id": "KEN-ID-11029",
+      "issuing_office": "Kenya Civil Registration Department",
+      "issued_on": "2023-01-10",
+      "current_status": "active"
+    }
+  ],
+  "health_records": [
+    {
+      "ref": "KEN-HLT-7001",
+      "patient_full_name": "Amara Wanjiru",
+      "patient_national_id": "KEN-ID-58213",
+      "record_type": "Yellow Fever Vaccination Certificate",
+      "facility": "Kenya Ministry of Health",
+      "issued_on": "2024-02-18",
+      "current_status": "active"
+    }
+  ]
+}

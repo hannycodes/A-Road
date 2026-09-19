@@ -20,8 +20,12 @@
     },
     "credentialType": {
       "type": "string",
-      "enum": ["diploma", "business_registration", "civil_status"],
-      "description": "One shared protocol, three record types — the point of the demo"
+      "enum": ["diploma", "business_registration", "civil_status", "health_record"],
+      "description": "One shared protocol, four record types — the point of the demo"
+    },
+    "credentialTitle": {
+      "type": ["string", "null"],
+      "description": "Human-readable title, e.g. 'Diploma in Nursing' — optional, set by the issuing country"
     },
     "holderName": { "type": "string" },
     "holderIdentifier": {
@@ -42,7 +46,11 @@
     },
     "signature": {
       "type": "string",
-      "description": "HMAC signature over the response, proving it came from the issuing country's adapter"
+      "description": "Ed25519 signature (base64) over the response, proving it came from the issuing country's adapter and wasn't altered"
+    },
+    "demoDisclaimer": {
+      "type": "string",
+      "description": "Present on every record in this PoC — makes clear this is a mock registry, not a real government integration"
     }
   }
 }
