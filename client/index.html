@@ -3,140 +3,68 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>A-Road — Verification Demo</title>
+<title>A-Road — Verification App</title>
 <style>
   :root {
-    --navy: #1B2A4A;
-    --navy-light: #2A3B5C;
-    --terracotta: #C1622F;
-    --gold: #E8A33D;
-    --cream: #F7F3EE;
-    --text: #33404F;
+    --bark: #3E2723;
+    --bark-light: #50352E;
+    --clay: #B5502D;
+    --gold: #D9A441;
+    --teal: #2F6E64;
+    --sand: #F5EDE0;
+    --text: #3A2E28;
+    --muted: #7A6A5D;
+    --line: #E6D9C4;
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, "Segoe UI", Calibri, Arial, sans-serif;
-    background: var(--cream);
-    color: var(--text);
-  }
-  header {
-    background: var(--navy);
-    color: white;
-    padding: 28px 32px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .logo-mark {
-    width: 44px; height: 44px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: bold; font-size: 22px; color: var(--navy);
-  }
-  header h1 { font-size: 20px; margin: 0; }
-  header p { margin: 2px 0 0; font-size: 13px; color: #B9C3D9; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Calibri, Arial, sans-serif; background: var(--sand); color: var(--text); }
+  header { background: var(--bark); color: white; padding: 26px 32px; display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 42px; height: 42px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 21px; color: var(--bark); }
+  header h1 { font-size: 19px; margin: 0; }
+  header p { margin: 2px 0 0; font-size: 12.5px; color: #D9C7B4; }
 
-  main {
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 32px 24px 64px;
+  .disclaimer {
+    background: #FFF3D6; border-bottom: 1px solid #E8CE8E; color: #6B5620;
+    font-size: 12.5px; padding: 8px 32px; text-align: center; font-weight: 600;
   }
 
-  .tabs { display: flex; gap: 10px; margin-bottom: 24px; }
-  .tab-btn {
-    padding: 10px 18px;
-    border-radius: 8px;
-    border: none;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    background: white;
-    color: var(--navy);
-  }
-  .tab-btn.active { background: var(--navy); color: white; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-btn { padding: 10px 16px; border-radius: 8px; border: none; font-size: 13.5px; font-weight: 600; cursor: pointer; background: white; color: var(--bark); }
+  .tab-btn.active { background: var(--bark); color: white; }
 
-  .card {
-    background: white;
-    border-radius: 12px;
-    padding: 28px;
-    box-shadow: 0 2px 10px rgba(27,42,74,0.08);
-  }
+  .card { background: white; border-radius: 12px; padding: 26px; box-shadow: 0 2px 10px rgba(62,39,35,0.1); }
+  .who-banner { background: var(--sand); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 6px; color: var(--bark); }
+  .who-banner b { color: var(--clay); }
 
-  label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; color: var(--navy); }
-  select, input {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #D9D2C5;
-    font-size: 14px;
-  }
-  button.submit {
-    margin-top: 20px;
-    background: var(--terracotta);
-    color: white;
-    border: none;
-    padding: 12px 22px;
-    border-radius: 8px;
-    font-size: 14.5px;
-    font-weight: 600;
-    cursor: pointer;
-  }
+  label { display: block; font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; color: var(--bark); }
+  select, input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); font-size: 14px; }
+  button.submit { margin-top: 18px; background: var(--clay); color: white; border: none; padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
   button.submit:hover { opacity: 0.92; }
+  button.submit.secondary { background: var(--bark); }
 
-  .result {
-    margin-top: 22px;
-    padding: 18px 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 1.55;
-    white-space: pre-wrap;
-  }
-  .result.ok { background: #EAF6EE; border: 1px solid #B7DFC2; }
+  .result { margin-top: 20px; padding: 18px 20px; border-radius: 10px; font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; }
+  .result.ok { background: #EAF5EF; border: 1px solid #B9DCC5; }
   .result.fail { background: #FBEAEA; border: 1px solid #EFBABA; }
-  .result.pending { background: #F0F0F0; border: 1px solid #DADADA; }
+  .result.pending { background: #F0EAE0; border: 1px solid #DDD0BC; }
 
-  .hint { font-size: 12.5px; color: #7A8494; margin-top: 6px; }
+  .trust-chain { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .trust-step { background: var(--sand); border: 1px solid var(--teal); border-radius: 6px; padding: 5px 10px; font-size: 11px; color: var(--teal); font-weight: 700; }
 
-  /* USSD mock */
-  .ussd-screen {
-    background: #0D1B2A;
-    color: #7CFC9A;
-    font-family: "Courier New", monospace;
-    border-radius: 12px;
-    padding: 22px;
-    font-size: 14px;
-    line-height: 1.7;
-    min-height: 260px;
-    white-space: pre-wrap;
-  }
-  .ussd-input {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
-  }
-  .ussd-input input {
-    flex: 1;
-    background: #0D1B2A;
-    color: #7CFC9A;
-    border: 1px solid #2A3B5C;
-    font-family: "Courier New", monospace;
-  }
-  .ussd-input button {
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    border-radius: 8px;
-    padding: 0 18px;
-    font-weight: bold;
-    cursor: pointer;
-  }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .link-box { display: flex; gap: 8px; margin-top: 14px; align-items: center; flex-wrap: wrap; }
+  .link-box input { flex: 1; min-width: 200px; font-family: monospace; font-size: 12px; }
+
+  .ussd-screen { background: #1A1210; color: #7CFC9A; font-family: "Courier New", monospace; border-radius: 12px; padding: 22px; font-size: 14px; line-height: 1.7; min-height: 240px; white-space: pre-wrap; }
+  .ussd-input { display: flex; gap: 10px; margin-top: 14px; }
+  .ussd-input input { flex: 1; background: #1A1210; color: #7CFC9A; border: 1px solid var(--bark-light); font-family: "Courier New", monospace; }
+  .ussd-input button { background: var(--gold); color: var(--bark); border: none; border-radius: 8px; padding: 0 18px; font-weight: bold; cursor: pointer; }
 
   .audit-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
-  .audit-table th, .audit-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #EEE7DA; }
-  .audit-table th { color: var(--navy); }
-  .refresh-btn { font-size: 12.5px; background: none; border: 1px solid var(--navy); color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+  .audit-table th, .audit-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  .audit-table th { color: var(--bark); }
+  .refresh-btn { font-size: 12.5px; background: none; border: 1px solid var(--bark); color: var(--bark); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -144,58 +72,91 @@
 <header>
   <div class="logo-mark">A</div>
   <div>
-    <h1>A-Road — Continental Verification Demo</h1>
-    <p>Query a diploma, business registration, or civil-status record across two simulated countries</p>
+    <h1>A-Road — Verification App</h1>
+    <p>Verifier Portal for institutions &middot; Citizen App for document holders</p>
   </div>
 </header>
+<div class="disclaimer">⚠ DEMO / MOCK NATIONAL REGISTRIES — Kenya and Rwanda data shown here is fictional sample data for this proof of concept, not a real government integration.</div>
 
 <main>
   <div class="tabs">
-    <button class="tab-btn active" data-tab="web">Web Form Client</button>
+    <button class="tab-btn active" data-tab="verify">Verifier Portal</button>
+    <button class="tab-btn" data-tab="mine">Citizen App (My Records)</button>
     <button class="tab-btn" data-tab="ussd">USSD-Style Flow (mocked)</button>
     <button class="tab-btn" data-tab="audit">Audit Log</button>
   </div>
 
-  <!-- WEB FORM TAB -->
-  <div class="card" id="tab-web">
+  <!-- VERIFIER PORTAL -->
+  <div class="card" id="tab-verify">
+    <label for="institution">You are checking as</label>
+    <select id="institution"><option value="">Loading institutions...</option></select>
+    <div class="who-banner" id="whoBanner">Select an institution to see who is asking.</div>
+
     <label for="credentialType">Credential type</label>
     <select id="credentialType">
       <option value="diploma">Diploma / Certificate</option>
       <option value="business_registration">Business Registration</option>
       <option value="civil_status">Civil-Status Record</option>
+      <option value="health_record">Health Record</option>
     </select>
 
     <label for="country">Issuing country</label>
     <select id="country">
-      <option value="MER">Meridia (MER)</option>
-      <option value="KES">Kessa (KES)</option>
+      <option value="KEN">Kenya (KEN)</option>
+      <option value="RWA">Rwanda (RWA)</option>
     </select>
 
     <label for="recordId">Record reference</label>
-    <input id="recordId" placeholder="e.g. MER-DIP-1001" />
+    <input id="recordId" placeholder="e.g. KEN-DIP-1001" />
     <div class="hint">
-      Try: MER-DIP-1001, MER-DIP-1002 (revoked), MER-BIZ-2002 (expired),
-      KES-DIP-4001, KES-BIZ-5002 (revoked), KES-CIV-6001
+      Try: KEN-DIP-1001 (nurse's diploma, valid), KEN-DIP-1002 (revoked), KEN-BIZ-2002 (expired), KEN-HLT-7001,
+      RWA-DIP-4001, RWA-BIZ-5002 (revoked), RWA-CIV-6001, RWA-HLT-7001
     </div>
 
-    <label for="requestedBy">Requested by (optional, for the audit log)</label>
-    <input id="requestedBy" placeholder="e.g. employer-lagos" />
-
-    <button class="submit" onclick="doVerify()">Verify</button>
-
-    <div id="result"></div>
+    <button class="submit" onclick="doVerify()">Send Verification Request</button>
+    <div id="verifyResult"></div>
   </div>
 
-  <!-- USSD TAB -->
+  <!-- CITIZEN APP -->
+  <div class="card" id="tab-mine" style="display:none;">
+    <p style="font-size:13.5px; color:var(--muted); margin-top:0;">
+      Generate a shareable verification link for your own record. Anyone who opens it sees only the
+      signed result below &mdash; never your full personal record.
+    </p>
+    <label for="mineType">Your credential type</label>
+    <select id="mineType">
+      <option value="diploma">Diploma / Certificate</option>
+      <option value="business_registration">Business Registration</option>
+      <option value="civil_status">Civil-Status Record</option>
+      <option value="health_record">Health Record</option>
+    </select>
+    <label for="mineCountry">Issuing country</label>
+    <select id="mineCountry">
+      <option value="KEN">Kenya (KEN)</option>
+      <option value="RWA">Rwanda (RWA)</option>
+    </select>
+    <label for="mineRecordId">Your record reference</label>
+    <input id="mineRecordId" placeholder="e.g. KEN-DIP-1001" />
+    <button class="submit secondary" onclick="generateLink()">Generate shareable link</button>
+    <div class="link-box" id="linkBox" style="display:none;">
+      <input id="shareLink" readonly />
+      <button class="submit" style="margin:0;" onclick="copyLink()">Copy</button>
+      <button class="submit secondary" style="margin:0;" onclick="openSharedLink()">Open it (simulate recipient)</button>
+    </div>
+    <div id="mineResult"></div>
+  </div>
+
+  <!-- USSD -->
   <div class="card" id="tab-ussd" style="display:none;">
-    <p style="font-size:13.5px; color:#7A8494; margin-top:0;">
-      This simulates what the same verification looks like over a feature phone,
-      with no smartphone or data connection — the same exchange layer, a different access channel.
+    <p style="font-size:13.5px; color:var(--muted); margin-top:0;">
+      What the same verification looks like over a basic phone, no smartphone or data connection needed.
+      Same exchange layer underneath &mdash; only the access channel differs.
     </p>
     <div class="ussd-screen" id="ussdScreen">*384*77# — A-Road Verify
 1. Diploma
 2. Business Registration
 3. Civil Status
+4. Health Record
 
 Reply with a number.</div>
     <div class="ussd-input">
@@ -204,13 +165,11 @@ Reply with a number.</div>
     </div>
   </div>
 
-  <!-- AUDIT TAB -->
+  <!-- AUDIT -->
   <div class="card" id="tab-audit" style="display:none;">
     <button class="refresh-btn" onclick="loadAudit()">Refresh</button>
     <table class="audit-table">
-      <thead>
-        <tr><th>Time</th><th>Country</th><th>Type</th><th>Record</th><th>Requested by</th><th>Result</th></tr>
-      </thead>
+      <thead><tr><th>Time</th><th>Country</th><th>Type</th><th>Record</th><th>Requesting Institution</th><th>Result</th></tr></thead>
       <tbody id="auditBody"></tbody>
     </table>
   </div>
