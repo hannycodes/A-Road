@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A-Road — Africa's Continental Trust Layer</title>
+<style>
+  :root {
+    --bark: #3E2723; --bark-light: #50352E; --clay: #B5502D; --gold: #D9A441; --teal: #2F6E64;
+    --sand: #F5EDE0; --text: #3A2E28; --muted: #7A6A5D; --bg: #FFFFFF; --card-bg: #F5EDE0; --line: #E6D9C4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Calibri, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; z-index: 50; background: var(--bark); color: white; padding: 14px 0; }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 18px; }
+  .brand .mark { width: 30px; height: 30px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bark); font-family: Georgia, serif; }
+  nav .links { display: flex; gap: 18px; font-size: 13.5px; flex-wrap: wrap; }
+  nav .links a { text-decoration: none; opacity: 0.85; }
+
+  .hero { background: var(--bark); color: white; padding: 70px 0 60px; }
+  .hero .pill { display: inline-block; background: var(--clay); color: white; font-size: 11.5px; font-weight: 700; letter-spacing: 0.6px; padding: 7px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .hero h1 { font-size: 38px; margin: 0 0 14px; max-width: 700px; }
+  .hero p.lead { font-size: 16.5px; color: #E8DCCB; max-width: 640px; margin: 0 0 26px; }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 12px 22px; border-radius: 8px; font-size: 14.5px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
+  .btn-gold { background: var(--gold); color: var(--bark); }
+  .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.4); }
+
+  .disclaimer-bar { background: #FFF3D6; color: #6B5620; text-align: center; font-size: 12.5px; font-weight: 600; padding: 8px 20px; }
+
+  section { padding: 56px 0; }
+  h2.section-title { font-size: 26px; margin: 0 0 8px; }
+  p.section-sub { color: var(--muted); font-size: 14px; margin: 0 0 28px; max-width: 620px; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 800px) { .grid3, .grid2, .grid4 { grid-template-columns: 1fr 1fr; } }
+
+  .card { background: var(--card-bg); border-radius: 12px; padding: 22px; border: 1px solid var(--line); }
+  .card h3 { margin: 0 0 8px; font-size: 15.5px; }
+  .card p { margin: 0; font-size: 13px; color: var(--muted); }
+  .badge-num { width: 34px; height: 34px; border-radius: 50%; background: var(--clay); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+
+  .built-card { border: 1.5px solid var(--teal); text-align: center; }
+  .vision-card { border: 1px dashed var(--line); text-align: center; color: var(--muted); font-size: 12px; padding: 16px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; color: var(--teal); margin-bottom: 10px; }
+  .eyebrow.muted { color: var(--muted); }
+
+  .demo-section { background: var(--card-bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .demo-shell { background: var(--bg); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
+  .demo-tabs { display: flex; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .demo-tab { flex: 1; min-width: 120px; padding: 14px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; border: none; color: var(--muted); }
+  .demo-tab.active { color: var(--clay); border-bottom: 2px solid var(--clay); }
+  .demo-body { padding: 24px; }
+
+  label { display: block; font-size: 12px; font-weight: 700; margin: 12px 0 6px; }
+  select, input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); font-size: 13.5px; background: var(--bg); color: var(--text); }
+  .demo-btn { margin-top: 16px; background: var(--clay); color: white; border: none; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+  .demo-btn.secondary { background: var(--bark); }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .who-banner { background: var(--card-bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; margin-top: 6px; }
+
+  .result { margin-top: 18px; padding: 15px 17px; border-radius: 10px; font-size: 13px; white-space: pre-wrap; line-height: 1.55; }
+  .result.ok { background: rgba(47,110,100,0.1); border: 1px solid rgba(47,110,100,0.35); }
+  .result.fail { background: rgba(181,80,45,0.1); border: 1px solid rgba(181,80,45,0.3); }
+
+  .link-box { display: flex; gap: 8px; margin-top: 12px; align-items: center; flex-wrap: wrap; }
+  .link-box input { flex: 1; min-width: 200px; font-family: monospace; font-size: 11.5px; }
+
+  .ussd-screen { background: #1A1210; color: #7CFC9A; font-family: "Courier New", monospace; border-radius: 10px; padding: 18px; font-size: 13px; line-height: 1.7; min-height: 190px; white-space: pre-wrap; }
+  .ussd-row { display: flex; gap: 8px; margin-top: 10px; }
+  .ussd-row input { flex: 1; background: #1A1210; color: #7CFC9A; border: 1px solid var(--bark-light); font-family: monospace; }
+  .ussd-row button { background: var(--gold); color: var(--bark); border: none; border-radius: 8px; padding: 0 16px; font-weight: bold; cursor: pointer; }
+
+  table.audit { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 10px; }
+  table.audit th, table.audit td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+
+  footer { padding: 40px 0 60px; text-align: center; color: var(--muted); font-size: 12.5px; }
+  footer .foot-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
+  footer .foot-links a { text-decoration: none; color: var(--clay); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="mark">A</span> A-Road</div>
+    <div class="links"><a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#vision">Built vs. vision</a><a href="#footer">Links</a></div>
+  </div>
+</nav>
+
+<div class="disclaimer-bar">⚠ DEMO / MOCK NATIONAL REGISTRIES — Kenya and Rwanda records shown here are fictional sample data for this proof of concept.</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="pill">TRACK: TRANSPARENCY &amp; ACCOUNTABILITY</div>
+    <h1>Verify, don't centralize.</h1>
+    <p class="lead">A-Road lets institutions in one African country confirm a record issued by another — without either country handing over its database. Inspired by Estonia's X-Road.</p>
+    <div class="btn-row">
+      <a class="btn btn-gold" href="#demo">Try the live demo</a>
+      <a class="btn btn-outline" href="#footer">View the repo</a>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <h2 class="section-title">The problem</h2>
+    <p class="section-sub">A nurse trained in Kenya. A hospital in Rwanda. No fast way to say yes.</p>
+    <div class="grid3">
+      <div class="card"><h3>The information exists</h3><p>Her diploma is genuine. Kenya's registry has the record. What's missing is a way for Rwanda to ask, and get a trustworthy answer.</p></div>
+      <div class="card"><h3>54 disconnected systems</h3><p>Every African country runs its own civil registries, education systems, and business registries — none of them talk to each other.</p></div>
+      <div class="card"><h3>She pays the cost</h3><p>Without a shared verification layer, she re-proves herself from scratch, or simply isn't believed.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-sub">Three layers. Sovereignty preserved, verification shared.</p>
+    <div class="grid3">
+      <div class="card"><div class="badge-num">1</div><h3>Sovereignty Layer</h3><p>Each country keeps its own registry. An adapter maps its format to one shared schema — no database is ever handed over.</p></div>
+      <div class="card"><div class="badge-num">2</div><h3>Exchange Layer</h3><p>A verifier sends a signed query. The issuing country answers with its own Ed25519 digital signature — asymmetric, so only they can sign.</p></div>
+      <div class="card"><div class="badge-num">3</div><h3>Access Layer</h3><p>Web portal, USSD, or SMS return a plain answer: valid, issued by whom, confirmed when.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="demo-section">
+  <div class="wrap">
+    <h2 class="section-title">Live demo</h2>
+    <p class="section-sub">Runs entirely in your browser with the same protocol logic and demo data as the GitHub repo — no install needed.</p>
+    <div class="demo-shell">
+      <div class="demo-tabs">
+        <button class="demo-tab active" data-tab="verify">Verifier Portal</button>
+        <button class="demo-tab" data-tab="mine">Citizen App</button>
+        <button class="demo-tab" data-tab="ussd">USSD-style flow</button>
+        <button class="demo-tab" data-tab="audit">Audit Log</button>
+      </div>
+
+      <div class="demo-body" id="panel-verify">
+        <label for="institution">You are checking as</label>
+        <select id="institution">
+          <option value="rwa-general-hospital">Rwanda General Hospital</option>
+          <option value="ken-ministry-of-health">Kenya Ministry of Health</option>
+          <option value="ken-business-partner">A Kenyan Trade Partner</option>
+        </select>
+        <div class="who-banner" id="whoBanner"></div>
+        <label for="credType">Credential type</label>
+        <select id="credType">
+          <option value="diploma">Diploma / Certificate</option>
+          <option value="business_registration">Business Registration</option>
+          <option value="civil_status">Civil-Status Record</option>
+          <option value="health_record">Health Record</option>
+        </select>
+        <label for="country">Issuing country</label>
+        <select id="country"><option value="KEN">Kenya (KEN)</option><option value="RWA">Rwanda (RWA)</option></select>
+        <label for="recordId">Record reference</label>
+        <input id="recordId" placeholder="e.g. KEN-DIP-1001" />
+        <div class="hint">Try: KEN-DIP-1001 (nurse's diploma), KEN-DIP-1002 (revoked), KEN-HLT-7001, RWA-DIP-4001, RWA-BIZ-5002 (revoked), RWA-CIV-6001</div>
+        <button class="demo-btn" onclick="doVerify()">Send Verification Request</button>
+        <div id="verifyResult"></div>
+      </div>
+
+      <div class="demo-body" id="panel-mine" style="display:none;">
+        <p style="font-size:13px; color:var(--muted); margin-top:0;">Generate a shareable link for your own record. The recipient sees only the result, never anything else about you.</p>
+        <label for="mineType">Your credential type</label>
+        <select id="mineType">
+          <option value="diploma">Diploma / Certificate</option>
+          <option value="business_registration">Business Registration</option>
+          <option value="civil_status">Civil-Status Record</option>
+          <option value="health_record">Health Record</option>
+        </select>
+        <label for="mineCountry">Issuing country</label>
+        <select id="mineCountry"><option value="KEN">Kenya (KEN)</option><option value="RWA">Rwanda (RWA)</option></select>
+        <label for="mineRecordId">Your record reference</label>
+        <input id="mineRecordId" placeholder="e.g. RWA-CIV-6001" />
+        <button class="demo-btn secondary" onclick="generateLink()">Generate shareable link</button>
+        <div class="link-box" id="linkBox" style="display:none;">
+          <input id="shareLink" readonly />
+          <button class="demo-btn" style="margin:0;" onclick="copyLink()">Copy</button>
+          <button class="demo-btn secondary" style="margin:0;" onclick="openSharedLink()">Open it (simulate recipient)</button>
+        </div>
+        <div id="mineResult"></div>
+      </div>
+
+      <div class="demo-body" id="panel-ussd" style="display:none;">
+        <p style="font-size:13px; color:var(--muted); margin-top:0;">What the same check looks like on a basic phone — no smartphone or data connection.</p>
+        <div class="ussd-screen" id="ussdScreen">*384*77# — A-Road Verify
+1. Diploma
+2. Business Registration
+3. Civil Status
+4. Health Record
+
+Reply with a number.</div>
+        <div class="ussd-row"><input id="ussdInput" placeholder="Type a reply" /><button onclick="ussdSend()">Send</button></div>
+      </div>
+
+      <div class="demo-body" id="panel-audit" style="display:none;">
+        <p style="font-size:12.5px; color:var(--muted); margin:0 0 4px;">Every check run in this browser session, logged with a timestamp and requesting institution.</p>
+        <table class="audit"><thead><tr><th>Time</th><th>Country</th><th>Type</th><th>Record</th><th>Institution</th><th>Result</th></tr></thead><tbody id="auditBody"></tbody></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision">
+  <div class="wrap">
+    <h2 class="section-title">Built vs. vision</h2>
+    <p class="section-sub">One protocol, proven on four record types now — designed to extend far further.</p>
+    <div class="eyebrow">BUILT &amp; WORKING IN THIS DEMO</div>
+    <div class="grid4">
+      <div class="card built-card"><h3>Diploma</h3></div>
+      <div class="card built-card"><h3>Business Reg.</h3></div>
+      <div class="card built-card"><h3>Civil Status</h3></div>
+      <div class="card built-card"><h3>Health Record</h3></div>
+    </div>
+    <div class="eyebrow muted" style="margin-top:26px;">WHERE A-ROAD GOES NEXT — ROADMAP, NOT BUILT</div>
+    <div class="grid4">
+      <div class="vision-card">Tax Records</div>
+      <div class="vision-card">Land Registry</div>
+      <div class="vision-card">Professional Licensing</div>
+      <div class="vision-card">Social Protection</div>
+      <div class="vision-card">Customs &amp; Trade Docs</div>
+      <div class="vision-card">Voter Rolls</div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="foot-links"><a href="#">GitHub Repository</a><a href="#">Pitch Deck</a><a href="#">Demo Video</a></div>
+    <p>A-Road — Prepared by Hanan Seid Mohammed for the "Information You Can Trust" capstone hackathon.</p>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  KEN: {
+    diploma: { "KEN-DIP-1001": { name: "Amara Wanjiru", id: "KEN-ID-58213", issuer: "Kenya School of Nursing", title: "Diploma in Nursing", date: "2021-06-14", status: "valid" },
+               "KEN-DIP-1002": { name: "Kwame Otieno", id: "KEN-ID-77410", issuer: "Kenya Institute of Technology", title: "Diploma in Electrical Engineering", date: "2019-11-02", status: "revoked" } },
+    business_registration: { "KEN-BIZ-2001": { name: "Savanna Textiles Ltd.", id: "KEN-ID-90312", issuer: "Kenya Business Registration Service", date: "2022-03-01", status: "valid" },
+               "KEN-BIZ-2002": { name: "Riverside Traders Co.", id: "KEN-ID-44120", issuer: "Kenya Business Registration Service", date: "2020-08-19", status: "expired" } },
+    civil_status: { "KEN-CIV-3001": { name: "Fatima Njeri", id: "KEN-ID-11029", issuer: "Kenya Civil Registration Department", date: "2023-01-10", status: "valid" } },
+    health_record: { "KEN-HLT-7001": { name: "Amara Wanjiru", id: "KEN-ID-58213", issuer: "Kenya Ministry of Health", title: "Yellow Fever Vaccination Certificate", date: "2024-02-18", status: "valid" } }
+  },
+  RWA: {
+    diploma: { "RWA-DIP-4001": { name: "Naledi Uwase", id: "RWA-ID-20981", issuer: "University of Rwanda", title: "Diploma in Nursing", date: "2020-09-14", status: "valid" },
+               "RWA-DIP-4002": { name: "Tendai Mugisha", id: "RWA-ID-55620", issuer: "Kigali Polytechnic", title: "Diploma in Civil Engineering", date: "2022-07-02", status: "valid" } },
+    business_registration: { "RWA-BIZ-5001": { name: "Baraka Logistics Ltd.", id: "RWA-ID-77302", issuer: "Rwanda Development Board", date: "2021-01-11", status: "valid" },
+               "RWA-BIZ-5002": { name: "Delta Farm Exports", id: "RWA-ID-30044", issuer: "Rwanda Development Board", date: "2019-11-23", status: "revoked" } },
+    civil_status: { "RWA-CIV-6001": { name: "Grace Uwimana", id: "RWA-ID-88213", issuer: "Rwanda Civil Affairs Office", date: "2022-03-05", status: "valid" } },
+    health_record: { "RWA-HLT-7001": { name: "Ibrahim Nshuti", id: "RWA-ID-19087", issuer: "Rwanda Ministry of Health", title: "Yellow Fever Vaccination Certificate", date: "2024-06-30", status: "valid" } }
+  }
+};
+const INSTITUTIONS = {
+  "rwa-general-hospital": "Rwanda General Hospital",
+  "ken-ministry-of-health": "Kenya Ministry of Health",
+  "ken-business-partner": "A Kenyan Trade Partner",
+  "citizen": "Citizen (self-check / shared link)"
+};
+let auditLog = [];
+
+function verifyRecord(country, credType, recordId, institutionId) {
+  const timestamp = new Date().toISOString();
+  const bucket = (DATA[country] || {})[credType] || {};
+  const rec = bucket[recordId];
+  const instName = INSTITUTIONS[institutionId] || institutionId || "unspecified";
+  const result = rec ? "verified_" + rec.status : "not_found";
+  auditLog.push({ timestamp, country, credType, recordId, institution: instName, result });
+  renderAudit();
+  return rec ? { found: true, ...rec, country, credType, recordId, lastConfirmed: timestamp } : { found: false };
+}
+function renderAudit() {
+  const body = document.getElementById("auditBody");
+  if (!body) return;
+  if (!auditLog.length) { body.innerHTML = '<tr><td colspan="6">No checks yet.</td></tr>'; return; }
+  body.innerHTML = auditLog.slice().reverse().map(e =>
+    `<tr><td>${e.timestamp.slice(11,19)}</td><td>${e.country}</td><td>${e.credType}</td><td>${e.recordId}</td><td>${e.institution}</td><td>${e.result}</td></tr>`
+  ).join("");
+}
+
+document.querySelectorAll(".demo-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".demo-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    ["verify","mine","ussd","audit"].forEach(name => {
+      document.getElementById(`panel-${name}`).style.display = (name === btn.dataset.tab) ? "block" : "none";
+    });
+    if (btn.dataset.tab === "audit") renderAudit();
+  });
+});
+
+function updateWhoBanner() {
+  const id = document.getElementById("institution").value;
+  document.getElementById("whoBanner").innerHTML = `You are checking as: <b>${INSTITUTIONS[id]}</b>`;
+}
+document.getElementById("institution").addEventListener("change", updateWhoBanner);
+updateWhoBanner();
+
+function doVerify() {
+  const institution = document.getElementById("institution").value;
+  const credType = document.getElementById("credType").value;
+  const country = document.getElementById("country").value;
+  const recordId = document.getElementById("recordId").value.trim();
+  const el = document.getElementById("verifyResult");
+  if (!recordId) { el.className = "result fail"; el.textContent = "Enter a record reference to verify."; return; }
+  const r = verifyRecord(country, credType, recordId, institution);
+  if (!r.found) { el.className = "result fail"; el.textContent = "❌ Could not verify — no matching record from the issuing country."; return; }
+  const icon = r.status === "valid" ? "✅" : r.status === "revoked" ? "❌" : "⚠️";
+  el.className = "result ok";
+  el.textContent = `${icon} Status: ${r.status.toUpperCase()}\n${r.title ? "Title: " + r.title + "\n" : ""}Holder: ${r.name} (${r.id})\nIssued by: ${r.issuer}, ${r.country}\nIssue date: ${r.date}\nLast confirmed: ${r.lastConfirmed}\nDEMO / MOCK NATIONAL REGISTRY`;
+}
+
+function generateLink() {
+  const credType = document.getElementById("mineType").value;
+  const country = document.getElementById("mineCountry").value;
+  const recordId = document.getElementById("mineRecordId").value.trim();
+  const el = document.getElementById("mineResult");
+  if (!recordId) { el.className = "result fail"; el.textContent = "Enter your record reference first."; return; }
+  const params = new URLSearchParams({ t: credType, c: country, r: recordId });
+  const link = `${location.origin}${location.pathname}#verify=${params.toString()}`;
+  document.getElementById("shareLink").value = link;
+  document.getElementById("linkBox").style.display = "flex";
+  el.className = "result ok";
+  el.textContent = "Link generated. Anyone who opens it sees only the result below — never your raw personal record.";
+}
+function copyLink() { const i = document.getElementById("shareLink"); i.select(); document.execCommand("copy"); }
+function openSharedLink() {
+  const link = document.getElementById("shareLink").value;
+  const hash = link.split("#verify=")[1];
+  if (!hash) return;
+  const params = new URLSearchParams(hash);
+  const r = verifyRecord(params.get("c"), params.get("t"), params.get("r"), "citizen");
+  const el = document.getElementById("mineResult");
+  if (!r.found) { el.className = "result fail"; el.textContent = "❌ Could not verify this record."; return; }
+  const icon = r.status === "valid" ? "✅" : r.status === "revoked" ? "❌" : "⚠️";
+  el.className = "result ok";
+  el.textContent = `Recipient view:\n${icon} Status: ${r.status.toUpperCase()}\nIssued by: ${r.issuer}, ${r.country}\nLast confirmed: ${r.lastConfirmed}`;
+}
+
+let ussdState = { step: "menu", credType: null, country: null };
+function ussdPrint(t) { document.getElementById("ussdScreen").textContent = t; }
+function ussdSend() {
+  const input = document.getElementById("ussdInput");
+  const reply = input.value.trim();
+  input.value = "";
+  if (ussdState.step === "menu") {
+    const map = { "1": "diploma", "2": "business_registration", "3": "civil_status", "4": "health_record" };
+    const t = map[reply];
+    if (!t) return ussdPrint("Invalid option. Reply 1-4.");
+    ussdState.credType = t; ussdState.step = "country";
+    return ussdPrint("A-Road Verify\n\nSelect issuing country:\n1. Kenya\n2. Rwanda");
+  }
+  if (ussdState.step === "country") {
+    const map = { "1": "KEN", "2": "RWA" };
+    const c = map[reply];
+    if (!c) return ussdPrint("Invalid option. Reply 1 or 2.");
+    ussdState.country = c; ussdState.step = "record";
+    return ussdPrint(`A-Road Verify\n\nEnter the record reference\n(e.g. ${c}-DIP-1001):`);
+  }
+  if (ussdState.step === "record") {
+    const r = verifyRecord(ussdState.country, ussdState.credType, reply, "citizen");
+    let text;
+    if (!r.found) text = "RESULT: NOT FOUND\n\nReply 0 to check another.";
+    else text = `RESULT: ${r.status.toUpperCase()}\n\nHolder: ${r.name}\nIssuer: ${r.issuer}\n\nReply 0 to check another.`;
+    ussdPrint(text);
+    ussdState.step = "restart";
+    return;
+  }
+  if (ussdState.step === "restart") {
+    ussdState = { step: "menu", credType: null, country: null };
+    return ussdPrint("*384*77# — A-Road Verify\n1. Diploma\n2. Business Registration\n3. Civil Status\n4. Health Record\n\nReply with a number.");
+  }
+}
+
+window.addEventListener("load", () => {
+  if (location.hash.startsWith("#verify=")) {
+    document.querySelector('[data-tab="verify"]').click();
+    document.querySelector('[data-tab="mine"]').click();
+    const params = new URLSearchParams(location.hash.replace("#verify=", ""));
+    document.getElementById("mineType").value = params.get("t") || "diploma";
+    document.getElementById("mineCountry").value = params.get("c") || "KEN";
+    document.getElementById("mineRecordId").value = params.get("r") || "";
+    document.getElementById("shareLink").value = location.href;
+    document.getElementById("linkBox").style.display = "flex";
+    openSharedLink();
+  }
+});
+</script>
+</body>
+</html>
