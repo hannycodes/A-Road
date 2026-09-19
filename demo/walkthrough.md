@@ -1,35 +1,44 @@
 # Demo video walkthrough
 
-A suggested script — aim for 3-5 minutes. Adjust pacing to fit your actual demo timing.
+Suggested script — aim for 1-2 minutes for the core flow, up to 4-5 if you show everything below.
 
-## 1. Open with the problem (20-30s)
+## 1. Open with the problem (15-20s)
 
-State it plainly: "Every African country has its own disconnected civil registries, education systems, and business registries. When someone's life crosses a border, their records don't cross with them." No need to show anything on screen yet — this is voice-over or title cards.
+"A nurse trained in Kenya applies to work at a hospital in Rwanda. Her diploma is genuine — but the hospital has no fast, standardized way to confirm that. That's the gap A-Road closes."
 
-## 2. Introduce A-Road (15-20s)
-
-"A-Road is a shared verification protocol — inspired by Estonia's X-Road — that lets institutions in one African country confirm a record issued by another, without a central database and without either country handing over its data."
-
-## 3. Show the running app (60-90s)
+## 2. Show the Verifier Portal (40-50s)
 
 Run `node exchange/server.js`, open `http://localhost:3000`.
 
-- Verify a **valid** Meridia diploma (`MER-DIP-1001`) — point out the signed response, the issuing institution, and the `lastConfirmed` timestamp.
-- Verify a **revoked** Kessa business registration (`KES-BIZ-5002`) — show that a "no" answer is just as clean as a "yes."
-- Switch credential type to **civil status**, verify a Kessa record (`KES-CIV-6001`) — this is the moment that proves the "one protocol, three record types" claim, so linger on it for a beat.
+- Select **"Rwanda General Hospital"** as the institution — point out the "You are checking as" banner, since this is what makes the audit log meaningful.
+- Credential type: **Diploma**, Country: **Kenya**, Reference: `KEN-DIP-1001`.
+- Click **Send Verification Request**. Point out the trust-chain steps that appear: routed → signed → signature verified (Ed25519) → logged.
+- Try `KEN-DIP-1002` (revoked) to show a clean "no" answer, just as fast as the "yes."
 
-## 4. Show the USSD-style flow (30-40s)
+## 3. Show domestic verification (15-20s)
 
-Switch to the USSD tab. Walk through the numbered menu → country → record reference flow, and verify the same or a different record. Say explicitly: "This is the same exchange layer — just a different access channel, for anyone without a smartphone or data connection."
+Switch institution to **"Kenya Ministry of Health"**, country **Kenya**, reference `KEN-CIV-3001`. Say explicitly: "Same protocol, same exchange layer — this time both sides are Kenya. A-Road doesn't distinguish domestic from cross-border."
 
-## 5. Show the audit log (20-30s)
+## 4. Show the Citizen App (25-30s)
 
-Switch to the Audit Log tab. Point out that every check you just ran is there, timestamped, with what was checked and the result — "this is the trust and traceability requirement made visible, not just promised."
+Switch tabs. Generate a shareable link for `RWA-CIV-6001`. Click "Open it (simulate recipient)." Say: "Instead of a stranger typing in a reference number, the record holder controls exactly what gets shared."
 
-## 6. Close on scalability (15-20s)
+## 5. Show the USSD-style flow (20-25s)
+
+Switch to the USSD tab. Walk through the numbered menu. Say: "Same exchange layer — a different access channel, for anyone without a smartphone or data connection."
+
+## 6. Show the audit log (15s)
+
+Switch to the Audit Log tab. Point out every check just run, with the requesting institution's name and a timestamp.
+
+## 7. Close (15-20s)
 
 "Onboarding a new country means adding one adapter — not rebuilding the system. That's the whole point: sovereignty preserved, verification shared."
 
+## Optional: prove it's not simulated crypto
+
+If there's time, run the tamper-detection command from the README live in a terminal — showing a genuine signature check fail on a tampered record is strong, concrete evidence this isn't just a UI mockup.
+
 ## Optional: show the code briefly
 
-If there's time, a quick screen-share of `registries/meridia/adapter.js` next to `registries/kessa/adapter.js` is a strong visual — two genuinely different data formats, mapped to the exact same shared schema. This is the clearest evidence of real engineering work for the "AI Coding Usage" judging criterion.
+A quick side-by-side of `registries/kenya/adapter.js` and `registries/rwanda/adapter.js` — two genuinely different data formats, mapped to the exact same shared schema — is strong evidence for the "AI Coding Usage" and "Uniqueness" judging criteria.
