@@ -4,13 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>A-Road — Africa's Continental Trust Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bark: #3E2723; --bark-light: #50352E; --clay: #B5502D; --gold: #D9A441; --teal: #2F6E64;
     --sand: #F5EDE0; --text: #3A2E28; --muted: #7A6A5D; --bg: #FFFFFF; --card-bg: #F5EDE0; --line: #E6D9C4;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: -apple-system, "Segoe UI", Calibri, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  body { margin: 0; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  h1, h2, h3, .brand, .tab-btn, .demo-btn, button, label, .pill { font-family: 'Space Grotesk', sans-serif; }
   a { color: inherit; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
@@ -21,7 +25,9 @@
   nav .links { display: flex; gap: 18px; font-size: 13.5px; flex-wrap: wrap; }
   nav .links a { text-decoration: none; opacity: 0.85; }
 
-  .hero { background: var(--bark); color: white; padding: 70px 0 60px; }
+  .hero { background: var(--bark); color: white; padding: 76px 0 64px; position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; opacity: 0.07; background-image: repeating-linear-gradient(115deg, transparent 0 40px, #fff 40px 41px); }
+  .hero .wrap { position: relative; z-index: 1; }
   .hero .pill { display: inline-block; background: var(--clay); color: white; font-size: 11.5px; font-weight: 700; letter-spacing: 0.6px; padding: 7px 14px; border-radius: 20px; margin-bottom: 18px; }
   .hero h1 { font-size: 38px; margin: 0 0 14px; max-width: 700px; }
   .hero p.lead { font-size: 16.5px; color: #E8DCCB; max-width: 640px; margin: 0 0 26px; }
@@ -41,7 +47,8 @@
   .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   @media (max-width: 800px) { .grid3, .grid2, .grid4 { grid-template-columns: 1fr 1fr; } }
 
-  .card { background: var(--card-bg); border-radius: 12px; padding: 22px; border: 1px solid var(--line); }
+  .card { background: var(--card-bg); border-radius: 14px; padding: 22px; border: 1px solid var(--line); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(62,39,35,0.1); }
   .card h3 { margin: 0 0 8px; font-size: 15.5px; }
   .card p { margin: 0; font-size: 13px; color: var(--muted); }
   .badge-num { width: 34px; height: 34px; border-radius: 50%; background: var(--clay); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px; font-size: 14px; }
@@ -58,10 +65,12 @@
   .demo-tab.active { color: var(--clay); border-bottom: 2px solid var(--clay); }
   .demo-body { padding: 24px; }
 
-  label { display: block; font-size: 12px; font-weight: 700; margin: 12px 0 6px; }
-  select, input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); font-size: 13.5px; background: var(--bg); color: var(--text); }
-  .demo-btn { margin-top: 16px; background: var(--clay); color: white; border: none; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
-  .demo-btn.secondary { background: var(--bark); }
+  label { display: block; font-size: 12px; font-weight: 600; margin: 14px 0 6px; }
+  select, input { width: 100%; padding: 11px 13px; border-radius: 10px; border: 1.5px solid var(--line); font-size: 13.5px; background: #FDFBF7; color: var(--text); transition: all 0.2s ease; font-family: 'Inter', sans-serif; }
+  select:focus, input:focus { outline: none; border-color: var(--clay); box-shadow: 0 0 0 4px rgba(181,80,45,0.12); }
+  .demo-btn { margin-top: 16px; background: var(--clay); color: white; border: none; padding: 12px 22px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 3px 10px rgba(181,80,45,0.3); }
+  .demo-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(181,80,45,0.4); }
+  .demo-btn.secondary { background: var(--bark); box-shadow: 0 3px 10px rgba(62,39,35,0.3); }
   .hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
   .who-banner { background: var(--card-bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; margin-top: 6px; }
 

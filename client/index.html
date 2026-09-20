@@ -4,67 +4,114 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>A-Road — Verification App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bark: #3E2723;
-    --bark-light: #50352E;
-    --clay: #B5502D;
-    --gold: #D9A441;
-    --teal: #2F6E64;
-    --sand: #F5EDE0;
-    --text: #3A2E28;
-    --muted: #7A6A5D;
-    --line: #E6D9C4;
+    --bark: #3E2723; --bark-light: #4F342C; --clay: #B5502D; --clay-light: #C96B45;
+    --gold: #D9A441; --teal: #2F6E64; --sand: #F5EDE0; --text: #2D2220; --muted: #7A6A5D; --line: #E6D9C4;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: -apple-system, "Segoe UI", Calibri, Arial, sans-serif; background: var(--sand); color: var(--text); }
-  header { background: var(--bark); color: white; padding: 26px 32px; display: flex; align-items: center; gap: 14px; }
-  .logo-mark { width: 42px; height: 42px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 21px; color: var(--bark); }
-  header h1 { font-size: 19px; margin: 0; }
-  header p { margin: 2px 0 0; font-size: 12.5px; color: #D9C7B4; }
-
-  .disclaimer {
-    background: #FFF3D6; border-bottom: 1px solid #E8CE8E; color: #6B5620;
-    font-size: 12.5px; padding: 8px 32px; text-align: center; font-weight: 600;
+  body {
+    margin: 0; font-family: 'Inter', -apple-system, sans-serif; background: var(--sand); color: var(--text);
+    background-image: radial-gradient(circle at 1px 1px, rgba(62,39,35,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
   }
+  h1, h2, .brand, .tab-btn, button, label { font-family: 'Space Grotesk', sans-serif; }
 
-  main { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
-  .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab-btn { padding: 10px 16px; border-radius: 8px; border: none; font-size: 13.5px; font-weight: 600; cursor: pointer; background: white; color: var(--bark); }
-  .tab-btn.active { background: var(--bark); color: white; }
+  header {
+    background: var(--bark); color: white; padding: 30px 32px; display: flex; align-items: center; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ""; position: absolute; inset: 0; opacity: 0.08;
+    background-image: repeating-linear-gradient(115deg, transparent 0 40px, #fff 40px 41px);
+  }
+  .logo-mark {
+    width: 46px; height: 46px; background: var(--gold); border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 700; font-size: 22px; color: var(--bark); position: relative; z-index: 1;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  }
+  header h1 { font-size: 20px; margin: 0; font-weight: 700; position: relative; z-index: 1; letter-spacing: -0.2px; }
+  header p { margin: 3px 0 0; font-size: 12.5px; color: #D9C7B4; position: relative; z-index: 1; }
 
-  .card { background: white; border-radius: 12px; padding: 26px; box-shadow: 0 2px 10px rgba(62,39,35,0.1); }
-  .who-banner { background: var(--sand); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 6px; color: var(--bark); }
+  .disclaimer { background: #FFF3D6; border-bottom: 1px solid #E8CE8E; color: #6B5620; font-size: 12.5px; padding: 9px 32px; text-align: center; font-weight: 600; }
+
+  main { max-width: 960px; margin: 0 auto; padding: 30px 24px 64px; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 22px; background: #EAE0CE; padding: 5px; border-radius: 12px; flex-wrap: wrap; }
+  .tab-btn {
+    flex: 1; min-width: 140px; padding: 11px 14px; border-radius: 9px; border: none; font-size: 13px;
+    font-weight: 600; cursor: pointer; background: transparent; color: var(--bark); transition: all 0.2s ease;
+  }
+  .tab-btn.active { background: var(--bark); color: white; box-shadow: 0 3px 10px rgba(62,39,35,0.25); }
+  .tab-btn:not(.active):hover { background: rgba(62,39,35,0.08); }
+
+  .card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 24px rgba(62,39,35,0.1); border: 1px solid #F0E6D6; }
+  .who-banner { background: var(--sand); border: 1px solid var(--line); border-radius: 9px; padding: 11px 14px; font-size: 13px; margin-bottom: 6px; transition: all 0.2s ease; }
   .who-banner b { color: var(--clay); }
 
-  label { display: block; font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; color: var(--bark); }
-  select, input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); font-size: 14px; }
-  button.submit { margin-top: 18px; background: var(--clay); color: white; border: none; padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
-  button.submit:hover { opacity: 0.92; }
-  button.submit.secondary { background: var(--bark); }
+  label { display: block; font-size: 12px; font-weight: 600; margin: 16px 0 6px; color: var(--bark); letter-spacing: 0.2px; }
+  select, input {
+    width: 100%; padding: 11px 13px; border-radius: 10px; border: 1.5px solid var(--line); font-size: 14px;
+    font-family: 'Inter', sans-serif; transition: all 0.2s ease; background: #FDFBF7; color: var(--text);
+  }
+  select:focus, input:focus { outline: none; border-color: var(--clay); box-shadow: 0 0 0 4px rgba(181,80,45,0.12); background: white; }
 
-  .result { margin-top: 20px; padding: 18px 20px; border-radius: 10px; font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; }
-  .result.ok { background: #EAF5EF; border: 1px solid #B9DCC5; }
-  .result.fail { background: #FBEAEA; border: 1px solid #EFBABA; }
-  .result.pending { background: #F0EAE0; border: 1px solid #DDD0BC; }
+  button.submit {
+    margin-top: 20px; background: var(--clay); color: white; border: none; padding: 13px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: 'Space Grotesk', sans-serif;
+    box-shadow: 0 3px 10px rgba(181,80,45,0.3);
+  }
+  button.submit:hover { background: var(--clay-light); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(181,80,45,0.4); }
+  button.submit:active { transform: translateY(0); }
+  button.submit.secondary { background: var(--bark); box-shadow: 0 3px 10px rgba(62,39,35,0.3); }
+  button.submit.secondary:hover { background: var(--bark-light); }
 
-  .trust-chain { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-  .trust-step { background: var(--sand); border: 1px solid var(--teal); border-radius: 6px; padding: 5px 10px; font-size: 11px; color: var(--teal); font-weight: 700; }
+  .spinner {
+    display: inline-block; width: 13px; height: 13px; border: 2px solid rgba(122,106,93,0.3);
+    border-top-color: var(--clay); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: -2px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .result {
+    margin-top: 22px; padding: 20px 22px; border-radius: 12px; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap;
+    opacity: 0; transform: translateY(6px); animation: fadeUp 0.35s ease forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .result.ok { background: linear-gradient(135deg, rgba(47,110,100,0.08), rgba(47,110,100,0.03)); border: 1px solid rgba(47,110,100,0.3); }
+  .result.fail { background: linear-gradient(135deg, rgba(181,80,45,0.08), rgba(181,80,45,0.03)); border: 1px solid rgba(181,80,45,0.28); }
+  .result.pending { background: #F3EEE3; border: 1px solid #DDD0BC; }
+
+  .trust-chain { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .trust-step {
+    background: var(--sand); border: 1px solid var(--teal); border-radius: 20px; padding: 6px 12px; font-size: 10.5px;
+    color: var(--teal); font-weight: 700; opacity: 0; transform: scale(0.9); animation: popIn 0.3s ease forwards;
+  }
+  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+
+  .hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
 
   .link-box { display: flex; gap: 8px; margin-top: 14px; align-items: center; flex-wrap: wrap; }
-  .link-box input { flex: 1; min-width: 200px; font-family: monospace; font-size: 12px; }
+  .link-box input { flex: 1; min-width: 200px; font-family: monospace; font-size: 11.5px; }
 
-  .ussd-screen { background: #1A1210; color: #7CFC9A; font-family: "Courier New", monospace; border-radius: 12px; padding: 22px; font-size: 14px; line-height: 1.7; min-height: 240px; white-space: pre-wrap; }
+  .ussd-screen {
+    background: #14100D; color: #7CFC9A; font-family: "SF Mono", "Courier New", monospace; border-radius: 14px;
+    padding: 24px; font-size: 14px; line-height: 1.75; min-height: 250px; white-space: pre-wrap;
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.4); border: 1px solid #2A2018;
+  }
   .ussd-input { display: flex; gap: 10px; margin-top: 14px; }
-  .ussd-input input { flex: 1; background: #1A1210; color: #7CFC9A; border: 1px solid var(--bark-light); font-family: "Courier New", monospace; }
-  .ussd-input button { background: var(--gold); color: var(--bark); border: none; border-radius: 8px; padding: 0 18px; font-weight: bold; cursor: pointer; }
+  .ussd-input input { flex: 1; background: #14100D; color: #7CFC9A; border: 1px solid var(--bark-light); font-family: monospace; }
+  .ussd-input button { background: var(--gold); color: var(--bark); border: none; border-radius: 10px; padding: 0 20px; font-weight: 700; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s ease; }
+  .ussd-input button:hover { background: #E6B25A; }
 
-  .audit-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
-  .audit-table th, .audit-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  .audit-table th { color: var(--bark); }
-  .refresh-btn { font-size: 12.5px; background: none; border: 1px solid var(--bark); color: var(--bark); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+  .audit-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 12px; }
+  .audit-table th, .audit-table td { text-align: left; padding: 10px; border-bottom: 1px solid var(--line); }
+  .audit-table th { color: var(--bark); font-family: 'Space Grotesk', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .audit-table tr:hover td { background: var(--sand); }
+  .refresh-btn { font-size: 12.5px; background: none; border: 1.5px solid var(--bark); color: var(--bark); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
+  .refresh-btn:hover { background: var(--bark); color: white; }
 </style>
 </head>
 <body>
@@ -81,12 +128,11 @@
 <main>
   <div class="tabs">
     <button class="tab-btn active" data-tab="verify">Verifier Portal</button>
-    <button class="tab-btn" data-tab="mine">Citizen App (My Records)</button>
-    <button class="tab-btn" data-tab="ussd">USSD-Style Flow (mocked)</button>
+    <button class="tab-btn" data-tab="mine">Citizen App</button>
+    <button class="tab-btn" data-tab="ussd">USSD Flow</button>
     <button class="tab-btn" data-tab="audit">Audit Log</button>
   </div>
 
-  <!-- VERIFIER PORTAL -->
   <div class="card" id="tab-verify">
     <label for="institution">You are checking as</label>
     <select id="institution"><option value="">Loading institutions...</option></select>
@@ -101,10 +147,7 @@
     </select>
 
     <label for="country">Issuing country</label>
-    <select id="country">
-      <option value="KEN">Kenya (KEN)</option>
-      <option value="RWA">Rwanda (RWA)</option>
-    </select>
+    <select id="country"><option value="KEN">Kenya (KEN)</option><option value="RWA">Rwanda (RWA)</option></select>
 
     <label for="recordId">Record reference</label>
     <input id="recordId" placeholder="e.g. KEN-DIP-1001" />
@@ -117,7 +160,6 @@
     <div id="verifyResult"></div>
   </div>
 
-  <!-- CITIZEN APP -->
   <div class="card" id="tab-mine" style="display:none;">
     <p style="font-size:13.5px; color:var(--muted); margin-top:0;">
       Generate a shareable verification link for your own record. Anyone who opens it sees only the
@@ -131,10 +173,7 @@
       <option value="health_record">Health Record</option>
     </select>
     <label for="mineCountry">Issuing country</label>
-    <select id="mineCountry">
-      <option value="KEN">Kenya (KEN)</option>
-      <option value="RWA">Rwanda (RWA)</option>
-    </select>
+    <select id="mineCountry"><option value="KEN">Kenya (KEN)</option><option value="RWA">Rwanda (RWA)</option></select>
     <label for="mineRecordId">Your record reference</label>
     <input id="mineRecordId" placeholder="e.g. KEN-DIP-1001" />
     <button class="submit secondary" onclick="generateLink()">Generate shareable link</button>
@@ -146,7 +185,6 @@
     <div id="mineResult"></div>
   </div>
 
-  <!-- USSD -->
   <div class="card" id="tab-ussd" style="display:none;">
     <p style="font-size:13.5px; color:var(--muted); margin-top:0;">
       What the same verification looks like over a basic phone, no smartphone or data connection needed.
@@ -165,11 +203,10 @@ Reply with a number.</div>
     </div>
   </div>
 
-  <!-- AUDIT -->
   <div class="card" id="tab-audit" style="display:none;">
-    <button class="refresh-btn" onclick="loadAudit()">Refresh</button>
+    <button class="refresh-btn" onclick="loadAudit()">↻ Refresh</button>
     <table class="audit-table">
-      <thead><tr><th>Time</th><th>Country</th><th>Type</th><th>Record</th><th>Requesting Institution</th><th>Result</th></tr></thead>
+      <thead><tr><th>Time</th><th>Country</th><th>Type</th><th>Record</th><th>Institution</th><th>Result</th></tr></thead>
       <tbody id="auditBody"></tbody>
     </table>
   </div>

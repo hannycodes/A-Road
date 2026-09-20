@@ -51,7 +51,7 @@ async function doVerify() {
   }
 
   resultEl.className = "result pending";
-  resultEl.textContent = "Sending request to the issuing country's adapter...";
+  resultEl.innerHTML = `<span class="spinner"></span>Sending request to the issuing country's adapter...`;
 
   try {
     const params = new URLSearchParams({ credentialType, country, recordId, requestingInstitution: institution });
@@ -65,7 +65,7 @@ async function doVerify() {
     const r = data.record;
     const icon = r.status === "valid" ? "✅" : r.status === "revoked" ? "❌" : "⚠️";
     resultEl.className = "result ok";
-    resultEl.innerHTML =
+    resultEl.textContent =
       `${icon} Status: ${r.status.toUpperCase()}\n` +
       `${r.credentialTitle ? "Title: " + r.credentialTitle + "\n" : ""}` +
       `Holder: ${r.holderName} (${r.holderIdentifier})\n` +
@@ -73,12 +73,23 @@ async function doVerify() {
       `Issue date: ${r.issueDate}\n` +
       `Last confirmed: ${r.lastConfirmed}\n` +
       `${r.demoDisclaimer}`;
-    resultEl.innerHTML += `<div class="trust-chain">
-      <span class="trust-step">✓ Request routed to ${r.issuingCountry}</span>
-      <span class="trust-step">✓ Signed by issuing authority</span>
-      <span class="trust-step">✓ Signature verified (Ed25519)</span>
-      <span class="trust-step">✓ Logged to audit trail</span>
-    </div>`;
+    const chain = document.createElement("div");
+    chain.className = "trust-chain";
+    resultEl.appendChild(chain);
+    const steps = [
+      `✓ Request routed to ${r.issuingCountry}`,
+      "✓ Signed by issuing authority",
+      "✓ Signature verified (Ed25519)",
+      "✓ Logged to audit trail",
+    ];
+    steps.forEach((text, i) => {
+      setTimeout(() => {
+        const span = document.createElement("span");
+        span.className = "trust-step";
+        span.textContent = text;
+        chain.appendChild(span);
+      }, i * 220);
+    });
   } catch (err) {
     resultEl.className = "result fail";
     resultEl.textContent = `Could not reach the exchange layer: ${err.message}`;
