@@ -39,6 +39,7 @@ loadInstitutions();
 // ---- Verifier Portal ----
 async function doVerify() {
   const institution = document.getElementById("institution").value;
+  const institutionLabel = INSTITUTIONS.find((i) => i.id === institution)?.name || institution;
   const credentialType = document.getElementById("credentialType").value;
   const country = document.getElementById("country").value;
   const recordId = document.getElementById("recordId").value.trim();
@@ -50,49 +51,82 @@ async function doVerify() {
     return;
   }
 
+  // Build a visible process trace. Every line below reflects a real step
+  // the code actually executes (see exchange/server.js handleVerify) —
+  // this just stops hiding them behind one instant fetch response.
   resultEl.className = "result pending";
-  resultEl.innerHTML = `<span class="spinner"></span>Sending request to the issuing country's adapter...`;
+  resultEl.innerHTML = `<div id="processTrace"></div>`;
+  const trace = document.getElementById("processTrace");
+
+  function addStep(text, delay) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const div = document.createElement("div");
+        div.className = "process-step";
+        div.innerHTML = `<span class="spinner"></span>${text}`;
+        trace.appendChild(div);
+        setTimeout(() => {
+          div.querySelector(".spinner").outerHTML = '<span class="step-check">✓</span>';
+          resolve();
+        }, 260);
+      }, delay);
+    });
+  }
+
+  await addStep(`Verification request sent — ${credentialType.replace("_", " ")} · ${recordId}`, 0);
+  await addStep(`A-Road exchange layer routing to ${country}'s adapter...`, 80);
 
   try {
     const params = new URLSearchParams({ credentialType, country, recordId, requestingInstitution: institution });
     const res = await fetch(`/api/verify?${params.toString()}`);
     const data = await res.json();
 
-    if (!data.ok) { resultEl.className = "result fail"; resultEl.textContent = `Error: ${data.error}`; return; }
-    if (!data.found) { resultEl.className = "result fail"; resultEl.textContent = `❌ ${data.message}`; return; }
-    if (!data.signatureValid) { resultEl.className = "result fail"; resultEl.textContent = `⚠️ ${data.message}`; return; }
+    if (!data.ok) { await addStep(`Error: ${data.error}`, 80); return; }
+    if (!data.found) {
+      await addStep(`${country}'s adapter searched its registry — no matching record found`, 80);
+      const div = document.createElement("div");
+      div.className = "result fail";
+      div.style.marginTop = "12px";
+      div.textContent = "❌ Could not verify — no matching record from the issuing country.";
+      resultEl.appendChild(div);
+      return;
+    }
 
     const r = data.record;
+    const fp = data.publicKeyFingerprint || "unknown";
+
+    await addStep(`${r.issuingCountry} located the record and signed the response with its private key (Ed25519)`, 80);
+
+    if (!data.signatureValid) {
+      await addStep(`A-Road attempted to verify the signature — FAILED`, 80);
+      const div = document.createElement("div");
+      div.className = "result fail";
+      div.style.marginTop = "12px";
+      div.textContent = `⚠️ ${data.message}`;
+      resultEl.appendChild(div);
+      return;
+    }
+
+    await addStep(`A-Road independently verified the signature using ${r.issuingCountry}'s public key (fingerprint ${fp})`, 80);
+    await addStep(`Logged to audit trail — requested by ${institutionLabel}`, 80);
+
     const icon = r.status === "valid" ? "✅" : r.status === "revoked" ? "❌" : "⚠️";
-    resultEl.className = "result ok";
-    resultEl.textContent =
+    const sigShort = r.signature ? `${r.signature.slice(0, 20)}...${r.signature.slice(-10)}` : "n/a";
+    const div = document.createElement("div");
+    div.className = "result ok";
+    div.style.marginTop = "12px";
+    div.innerHTML =
       `${icon} Status: ${r.status.toUpperCase()}\n` +
       `${r.credentialTitle ? "Title: " + r.credentialTitle + "\n" : ""}` +
       `Holder: ${r.holderName} (${r.holderIdentifier})\n` +
       `Issued by: ${r.issuingInstitution}, ${r.issuingCountry}\n` +
       `Issue date: ${r.issueDate}\n` +
-      `Last confirmed: ${r.lastConfirmed}\n` +
+      `Last confirmed: ${r.lastConfirmed}\n\n` +
+      `<span class="crypto-detail">Ed25519 signature: ${sigShort}\nIssuer public key fingerprint: ${fp}</span>\n\n` +
       `${r.demoDisclaimer}`;
-    const chain = document.createElement("div");
-    chain.className = "trust-chain";
-    resultEl.appendChild(chain);
-    const steps = [
-      `✓ Request routed to ${r.issuingCountry}`,
-      "✓ Signed by issuing authority",
-      "✓ Signature verified (Ed25519)",
-      "✓ Logged to audit trail",
-    ];
-    steps.forEach((text, i) => {
-      setTimeout(() => {
-        const span = document.createElement("span");
-        span.className = "trust-step";
-        span.textContent = text;
-        chain.appendChild(span);
-      }, i * 220);
-    });
+    resultEl.appendChild(div);
   } catch (err) {
-    resultEl.className = "result fail";
-    resultEl.textContent = `Could not reach the exchange layer: ${err.message}`;
+    await addStep(`Could not reach the exchange layer: ${err.message}`, 80);
   }
 }
 

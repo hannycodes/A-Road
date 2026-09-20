@@ -10,6 +10,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { verify: verifySignature } = require("../protocol/sign.js");
 
 const kenya = require("../registries/kenya/adapter.js");
@@ -98,7 +99,8 @@ function handleVerify(req, res, query) {
     return sendJson(res, 200, { ok: true, found: true, signatureValid: false, message: "Record returned but signature could not be verified \u2014 treat as untrusted." });
   }
 
-  return sendJson(res, 200, { ok: true, found: true, signatureValid: true, record });
+  const publicKeyFingerprint = crypto.createHash("sha256").update(adapter.publicKey).digest("hex").slice(0, 16);
+  return sendJson(res, 200, { ok: true, found: true, signatureValid: true, record, publicKeyFingerprint });
 }
 
 function handleAudit(req, res) {

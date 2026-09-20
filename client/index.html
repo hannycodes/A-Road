@@ -75,14 +75,22 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .result {
-    margin-top: 22px; padding: 20px 22px; border-radius: 12px; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap;
+  .result { margin-top: 22px; }
+  .process-step {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 13px; color: var(--text);
+    background: #FBF7EF; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px;
+    opacity: 0; animation: fadeUp 0.3s ease forwards;
+  }
+  .step-check { color: var(--teal); font-weight: 700; width: 13px; display: inline-block; }
+  .crypto-detail { display: block; font-family: "SF Mono", "Courier New", monospace; font-size: 11px; color: var(--teal); background: rgba(47,110,100,0.07); padding: 8px 10px; border-radius: 6px; margin-top: 4px; white-space: pre-wrap; word-break: break-all; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .result.ok, .result.fail, .result.pending {
+    padding: 18px 20px; border-radius: 12px; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap;
     opacity: 0; transform: translateY(6px); animation: fadeUp 0.35s ease forwards;
   }
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   .result.ok { background: linear-gradient(135deg, rgba(47,110,100,0.08), rgba(47,110,100,0.03)); border: 1px solid rgba(47,110,100,0.3); }
   .result.fail { background: linear-gradient(135deg, rgba(181,80,45,0.08), rgba(181,80,45,0.03)); border: 1px solid rgba(181,80,45,0.28); }
-  .result.pending { background: #F3EEE3; border: 1px solid #DDD0BC; }
+  .result.pending { background: transparent; }
 
   .trust-chain { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
   .trust-step {
