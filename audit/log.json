@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "timestamp": "2026-09-20T08:39:27.763Z",
+    "country": "KEN",
+    "credentialType": "diploma",
+    "recordId": "KEN-DIP-1001",
+    "requestingInstitution": "Rwanda General Hospital",
+    "result": "verified_valid"
+  },
+  {
+    "timestamp": "2026-09-21T14:34:35.729Z",
+    "country": "KEN",
+    "credentialType": "diploma",
+    "recordId": "KEN-DIP-1001",
+    "requestingInstitution": "Rwanda General Hospital",
+    "result": "verified_valid"
+  },
+  {
+    "timestamp": "2026-09-21T14:41:54.843Z",
+    "country": "KEN",
+    "credentialType": "diploma",
+    "recordId": "KEN-DIP-1001",
+    "requestingInstitution": "Rwanda General Hospital",
+    "result": "verified_valid"
+  }
+]
